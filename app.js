@@ -21,6 +21,12 @@ app.get('/', (req,res)=>{
  res.render('home')
 })
 
+//shows all the campgrounds
+app.get('/campgrounds', async (req,res)=>{
+    const campgrounds = await Campground.find({});
+    res.render('campgrounds/index', {campgrounds});
+})
+
 
 //running port
 app.listen(3000, ()=>{
