@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
+const methodOverride = require('method-override');
 const path = require('path')
 
 main().catch(err => console.log(err));
@@ -17,6 +18,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({extended: true}))
+app.use(methodOverride('_method'))//used to override method get or post when submit the edit form
 
 app.get('/', (req,res)=>{
  res.render('home')
@@ -47,6 +49,18 @@ app.get('/campgrounds/:id', async(req, res)=>{
   res.render('campgrounds/show', {campground})
 });
 
+//edit page
+app.get('/campgrounds/:id/edit', async(req, res)=>{
+  const campground = await Campground.findById(req.params.id);
+  res.render('campgrounds/edit', {campground});
+})
+
+//where edit submit
+app.put('/campgrounds/:id', async(req,res)=>{
+  const {id} = req.params
+  const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
+  res.redirect(`/campgrounds/${campground._id}`)
+})
 
 //running port
 app.listen(3000, ()=>{
