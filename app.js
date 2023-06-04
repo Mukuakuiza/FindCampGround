@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const ejsMate =require('ejs-mate');
 const Campground = require('./models/campground');
 const methodOverride = require('method-override');
 const path = require('path')
@@ -13,10 +14,9 @@ async function main() {
   console.log("Mongoose connection open!!");
 }
 
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
+app.engine('ejs', ejsMate);
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))//used to override method get or post when submit the edit form
 
