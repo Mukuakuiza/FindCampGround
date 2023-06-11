@@ -37,10 +37,14 @@ app.get('/campgrounds/new', (req, res) => {
  });
 
  //where the forms submit the info
-app.post('/campgrounds', async(req,res)=>{
-  const campground = new Campground(req.body.campground)
-  await campground.save();
-  res.redirect(`/campgrounds/${campground._id}`)
+app.post('/campgrounds', async(req,res, next)=>{
+  try{
+    const campground = new Campground(req.body.campground)
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`)
+  }catch(e){
+    next(e)
+  }
 })
 
 //shows individual campground
@@ -69,6 +73,10 @@ app.delete('/campgrounds/:id', async(req, res)=>{
   res.redirect('/campgrounds')
 })
 
+
+app.use((err,req,res,next)=>{
+  res.send('Sorry, something went wrong!')
+})
 //running port
 app.listen(3000, ()=>{
     console.log('Listening on port 3000!!!');
