@@ -40,6 +40,7 @@ app.get('/campgrounds/new', (req, res) => {
 
  //where the forms submit the info
 app.post('/campgrounds',catchAsync( async(req,res, next)=>{
+  if(!re.body.campground) throw new ExpressError('Invalid Campground data', 400);
     const campground = new Campground(req.body.campground)
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`)
@@ -77,8 +78,9 @@ app.all('*', (req,res,next)=>{
 
 //next error message
 app.use((err,req,res,next)=>{
-  const {statusCode = 500, message ='Sorry, something went wrong!' } = err;
-  res.status(statusCode).send(message);
+  const {statusCode = 500} = err;
+  if(!err.message) err.message = 'Sorry, something went wrong!' 
+  res.status(statusCode).render('error', {err});
 })
 //running port
 app.listen(3000, ()=>{
