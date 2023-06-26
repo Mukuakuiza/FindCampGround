@@ -3,10 +3,23 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const ejsMate =require('ejs-mate');
+const session = require('express-session');
 const ExpressError = require('./utils/expressError')
 const methodOverride = require('method-override');
 const path = require('path')
 app.use(express.static(path.join(__dirname,'public')));
+
+const sessionConfig={
+  secret: 'thisshouldbebettersecret!',
+  resave: false,
+  saveUninitialized: true,
+  cookie:{
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7
+  }
+}
+app.use(session(sessionConfig))
 
 //getting the router from the routes folder
 const campgrounds = require('./routes/campgrounds')
