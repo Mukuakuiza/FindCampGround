@@ -6,6 +6,7 @@ const ejsMate =require('ejs-mate');
 const ExpressError = require('./utils/expressError')
 const methodOverride = require('method-override');
 const path = require('path')
+app.use(express.static(path.join(__dirname,'public')));
 
 //getting the router from the routes folder
 const campgrounds = require('./routes/campgrounds')
