@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const ejsMate =require('ejs-mate');
 const session = require('express-session');
+const flash = require('connect-flash');
 const ExpressError = require('./utils/expressError')
 const methodOverride = require('method-override');
 const path = require('path')
@@ -20,6 +21,14 @@ const sessionConfig={
   }
 }
 app.use(session(sessionConfig))
+app.use(flash());
+
+//flash middleware
+app.use((req, res, next)=>{
+  res.locals.success =req.flash('success')
+  res.locals.error =req.flash('error')
+  next();
+})
 
 //getting the router from the routes folder
 const campgrounds = require('./routes/campgrounds')
