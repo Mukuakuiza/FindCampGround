@@ -8,6 +8,11 @@ const flash = require('connect-flash');
 const ExpressError = require('./utils/expressError')
 const methodOverride = require('method-override');
 const path = require('path')
+const passport = require('passport')
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
+
+
 app.use(express.static(path.join(__dirname,'public')));
 
 const sessionConfig={
@@ -22,6 +27,15 @@ const sessionConfig={
 }
 app.use(session(sessionConfig))
 app.use(flash());
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+
+//how to store a user in a session
+passport.serializeUser(User.serializeUser());
+
+//how to get user out of session
+passport.deserializeUser(User.deserializeUser());
 
 //flash middleware
 app.use((req, res, next)=>{
