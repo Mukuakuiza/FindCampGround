@@ -45,8 +45,9 @@ app.use((req, res, next)=>{
 })
 
 //getting the router from the routes folder
-const campgrounds = require('./routes/campgrounds')
-const reviews = require('./routes/reviews')
+const userRoutes = require('./routes/users')
+const campgroundsRoutes = require('./routes/campgrounds')
+const reviewsRoutes = require('./routes/reviews')
 
 main().catch(err => console.log(err));
 
@@ -67,8 +68,9 @@ app.use(methodOverride('_method'))//used to override method get or post when sub
 
 
 //using the routes with path prefix 
-app.use('/campgrounds', campgrounds)
-app.use('/campgrounds/:id/reviews', reviews)
+app.use('/', userRoutes)
+app.use('/campgrounds', campgroundsRoutes)
+app.use('/campgrounds/:id/reviews', reviewsRoutes)
 
 app.get('/', (req,res)=>{
  res.render('home')
