@@ -5,7 +5,7 @@ const {campgroundSchema, reviewSchema} = require('../schemas.js')
 const ExpressError = require('../utils/expressError')
 const Campground = require('../models/campground');
 const { ref } = require('joi');
-const isLoggedIn = require('../middleware');
+const {isLoggedIn} = require('../middleware');
 
 
 //joi middleware
