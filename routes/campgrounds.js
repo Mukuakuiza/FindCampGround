@@ -5,7 +5,8 @@ const Campground = require('../models/campground');
 const campgrounds = require('../controllers/campgrounds')
 const {isLoggedIn,isAuthor, validateCampground} = require('../middleware');
 const multer = require('multer')
-const upload = multer({dest: 'uploads/'})
+const {storage} = require('../cloudinary')
+const upload = multer({storage})
 
 
 //shows all the campgrounds
@@ -16,8 +17,8 @@ router.get('/new', isLoggedIn, campgrounds.renderNewForm);
 
  //where the forms submit the info of created campground
 // router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
-router.post('/', upload.single('image'), (req,res)=>{
-    console.log(req.body, req.file)
+router.post('/', upload.array('image'), (req,res)=>{
+    console.log(req.body, req.files)
     res.send('worked')
 })
 
