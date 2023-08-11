@@ -16,11 +16,12 @@ router.get('/',catchAsync(campgrounds.index));
 router.get('/new', isLoggedIn, campgrounds.renderNewForm);
 
  //where the forms submit the info of created campground
-// router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
-router.post('/', upload.array('image'), (req,res)=>{
-    console.log(req.body, req.files)
-    res.send('worked')
-})
+router.post('/', isLoggedIn, upload.array('image'), validateCampground,  catchAsync(campgrounds.createCampground))
+
+// router.post('/', upload.array('image'), (req,res)=>{
+//     console.log(req.body, req.files)
+//     res.send('worked')
+// })
 
 //shows individual campground
 router.get('/:id', catchAsync(campgrounds.showCampground));
