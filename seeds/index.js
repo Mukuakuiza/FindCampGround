@@ -25,6 +25,10 @@ const seedDB = async ()=>{
             title:`${sample(descriptors)} ${sample(places)}`,
             description: 'velit tenetur dolor voluptatibus sequi voluptates, rem, obcaecati aspernatur soluta odio sit, velit tenetur dolor voluptatibus sequi voluptates, rem, obcaecati aspernatur soluta odio sit',
             price: price,
+            geometry:{
+              type:"Point",
+              coordinates: [-113.1331, 47.0202]
+            },
             images: [
                 {
                   url: 'https://res.cloudinary.com/dkdapxuii/image/upload/v1691963656/YatenaCamp/xvgo7idzhzwvbil9o3fo.jpg',
