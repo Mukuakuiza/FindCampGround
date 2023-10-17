@@ -4,9 +4,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Yatena Camp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/home.css">
 </head>
-<body>
-    <h1>HOME</h1>
+<body class="d-flex text-center text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="float-md-left mb-0">Yatena Camp</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-right">
+                    <a href="#" class="nav-link active" aria-current="page">Home</a>
+                    <a href="/campgrounds" class="nav-link">Campgrounds</a>
+                    <% if(!currentUser) {%>
+                        <a href="/login" class="nav-link">Login</a>
+                        <a href="/register" class="nav-link">Register</a>
+                    <% } else {%>
+                         <a href="/logout" class="nav-link">Logout</a>
+                    <% } %>
+                </nav>
+            </div>
+        </header>
+
+        <main class="px-3">
+            <h1>Welcome to Yatena where you find campgrounds</h1>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis provident veritatis, nam quibusdam necessitatibus quo, fuga molestias quod praesentium consequatur soluta voluptatem aspernatur dolore, quos reiciendis quia! Delectus, necessitatibus adipisci.</p>
+            <a href="/campgrounds" class="btn btn-lg btn-primary font-weight-normal text-white">View Campgrounds</a>
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p>&copy;Yatena Camp 2020</p>
+        </footer>
+    </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+    integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+    crossorigin="anonymous"></script>
 </body>
 </html>
