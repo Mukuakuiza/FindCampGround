@@ -15,9 +15,11 @@ const path = require('path')
 const passport = require('passport')
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 app.use(express.static(path.join(__dirname,'public')));
+app.use(mongoSanitize())
 
 const sessionConfig={
   secret: 'thisshouldbebettersecret!',
