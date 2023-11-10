@@ -17,11 +17,34 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const MongoStore = require('connect-mongo');
+
 // const dbURl = process.env.DB_URL;
 app.use(express.static(path.join(__dirname,'public')));
 app.use(mongoSanitize())
 
+const dbUrl = 'mongodb://127.0.0.1:27017/Yatena-Camp'
+main().catch(err => console.log(err));
+async function main() {
+  // await mongoose.connect('mongodb://127.0.0.1:27017/Yatena-Camp');
+  await mongoose.connect(dbUrl);
+  console.log("Mongoose connection open!!");
+}
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+
+store.on("error", function(e){
+  console.log("Session store error", e)
+})
+
 const sessionConfig={
+  store: store,
   name: 'session',
   secret: 'thisshouldbebettersecret!',
   resave: false,
@@ -106,13 +129,7 @@ const userRoutes = require('./routes/users')
 const campgroundsRoutes = require('./routes/campgrounds')
 const reviewsRoutes = require('./routes/reviews')
 
-main().catch(err => console.log(err));
 
-async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/Yatena-Camp');
-  // await mongoose.connect(dbURl);
-  console.log("Mongoose connection open!!");
-}
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
